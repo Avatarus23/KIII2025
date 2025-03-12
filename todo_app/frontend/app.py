@@ -5,7 +5,7 @@ import pandas as pd
 
 # Read API host from environment variable, defaulting to "backend" if not set
 API_HOST = os.getenv("API_HOST", "localhost")
-API_PORT = os.getenv("API_PORT", "5001")
+API_PORT = os.getenv("API_PORT", "5000`")
 API_URL = f"http://{API_HOST}:{API_PORT}/tasks"
 
 st.title("To-Do List App")

@@ -4,9 +4,9 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
 
-db_host = os.getenv("DB_HOST","localhost")
-db_user = os.getenv("DB_USER","root")
-db_password = os.getenv("DB_PASSWORD","rootpass")
+db_host = os.getenv("DATABASE_HOST","localhost")
+db_user = os.getenv("DATABASE_USER","root")
+db_password = os.getenv("DATABASE_PASSWORD","rootpass")
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{db_user}:{db_password}@{db_host}/task_db'

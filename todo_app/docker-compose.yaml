@@ -1,12 +1,37 @@
-version: '3'
+version: '3.8'
 services:
-  web:
-    image: galic/todo_app
-#    build: /home/bobi/Bobi/Finki/Semestar6/KIII - Kontinuirana Integracija i isporaka/KIII2025/todo_app
-    command: python app.py
+  database:
+    image: mysql:latest
+    restart: always
     ports:
-      - "5000:5000"
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
     volumes:
-      - .:/todo_app
-  redis:
-    image: redis
+      - database-data:/var/lib/mysql
+
+  backend:
+    build: ./backend/
+    restart: always
+    ports:
+      - 5000:5000
+    environment:
+      - DATABASE_HOST=database
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+    links:
+      - database
+
+  frontend:
+    build: ./frontend/
+    restart: always
+    ports:
+      - "8501:8501"
+    environment:
+      - API_HOST=backend
+      - API_PORT=5000
+    links:
+      - backend
+
+volumes:
+  database-data:
